@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Very Random Server | Java Minecraft server</title>
+<meta name="description" content="A Java Edition Minecraft server. Join at avrs.aternos.me.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%236e4b2a'/%3E%3Crect width='16' height='5' fill='%2335701c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="sky">
+  <header class="site-header wrap">
+    <a class="brand" href="index.html" aria-label="A Very Random Server, home">
+      <span class="brand-mark">AVRS</span><span class="brand-name">A Very Random Server</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="rules.html">Rules</a>
+      <a href="appeals.html">Appeals</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+  <div class="hero wrap">
+    <div>
+      <h1>A Very Random Server</h1>
+      <p class="lede">A Java Edition Minecraft server where you never quite know what happens next. Copy the address, add it in Minecraft, and jump in.</p>
+      <div class="ip">
+        <code class="ip-address">avrs.aternos.me</code>
+        <button class="btn" type="button" data-copy-ip>Copy IP</button>
+      </div>
+      <p class="java-note">Java Edition only. Bedrock, console, and mobile can't connect.</p>
+    </div>
+    <aside class="box status" data-status aria-label="Server status">
+      <h2>Server status</h2>
+      <p class="status-line" aria-live="polite"><span class="dot" data-status-dot></span><span data-status-text>Checking…</span></p>
+      <dl class="facts">
+        <div><dt>Players</dt><dd data-status-players>–</dd></div>
+        <div><dt>Version</dt><dd data-status-version>–</dd></div>
+      </dl>
+      <p class="hint" data-status-note></p>
+    </aside>
+  </div>
+</div>
+
+<main id="main">
+  <section class="section wrap" aria-labelledby="join-h">
+    <h2 id="join-h">Join in three steps</h2>
+    <ol class="steps">
+      <li>
+        <h3>Open Minecraft</h3>
+        <p>Launch Minecraft: Java Edition and choose Multiplayer from the main menu.</p>
+      </li>
+      <li>
+        <h3>Add the server</h3>
+        <p>Select Add Server, then paste <strong>avrs.aternos.me</strong> into the Server Address box and save.</p>
+      </li>
+      <li>
+        <h3>Read the rules, then play</h3>
+        <p>Select AVRS and join. The <a href="rules.html">rules</a> are short and apply to everyone.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="section wrap" aria-labelledby="chaos-h">
+    <div class="box chaos">
+      <h2 id="chaos-h">Nothing to do? Roll the dice.</h2>
+      <p id="chaos-output" class="chaos-output" aria-live="polite">Press the button for a random thing to try on the server.</p>
+      <button class="btn dark" type="button" id="chaos-roll">Roll something random</button>
+    </div>
+  </section>
+
+  <section class="section wrap" aria-labelledby="more-h">
+    <h2 id="more-h">Around the site</h2>
+    <nav class="rows" aria-label="Site sections">
+      <a href="rules.html"><strong>Rules</strong><span>What's allowed, what isn't, and what happens if you break a rule.</span></a>
+      <a href="appeals.html"><strong>Appeals</strong><span>Banned or muted? Tell staff your side.</span></a>
+      <a href="faq.html"><strong>FAQ</strong><span>Can't connect? Server offline? Start here.</span></a>
+    </nav>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p><strong>A Very Random Server</strong></p>
+      <p>Java Edition only. Address: <strong>avrs.aternos.me</strong></p>
+      <p><a href="https://discord.com" data-discord hidden>Join our Discord</a></p>
+    </div>
+    <p class="fine">AVRS is a fan-run community server. Not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios.</p>
+  </div>
+</footer>
+</body>
+</html>

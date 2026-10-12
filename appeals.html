@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appeals | A Very Random Server</title>
+<meta name="description" content="Appeal a ban or mute on A Very Random Server.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%236e4b2a'/%3E%3Crect width='16' height='5' fill='%2335701c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;600;700&family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="sky">
+  <header class="site-header wrap">
+    <a class="brand" href="index.html" aria-label="A Very Random Server, home">
+      <span class="brand-mark">AVRS</span><span class="brand-name">A Very Random Server</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="nav" id="site-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="rules.html">Rules</a>
+      <a href="appeals.html" aria-current="page">Appeals</a>
+      <a href="faq.html">FAQ</a>
+    </nav>
+  </header>
+  <div class="page-head wrap">
+    <h1>Appeals</h1>
+    <p>Think a ban or mute was a mistake, or ready to show you've changed? Tell staff what happened.</p>
+  </div>
+</div>
+
+<main id="main">
+  <section class="section wrap split">
+    <div class="prose">
+      <h2>Before you appeal</h2>
+      <ul>
+        <li>Read the <a href="rules.html">rules</a> and work out which one the punishment is about.</li>
+        <li>Tell the truth. Staff can check logs, and a made-up story usually ends the appeal.</li>
+        <li>Appeal once. Sending the same appeal again won't speed anything up.</li>
+        <li>Don't join on another account while banned. That's ban evasion (rule 9) and counts against you.</li>
+        <li>Mutes and kicks can be appealed too.</li>
+      </ul>
+      <h2>What happens next</h2>
+      <p>Staff review appeals as time allows and answer using the contact you provide, so make sure it's one you check.</p>
+      <p><a class="btn green" href="https://discord.com" data-discord hidden>Ask staff on Discord</a></p>
+    </div>
+
+    <div class="box">
+      <h2>Appeal form</h2>
+      <form id="appeal-form" novalidate>
+        <div class="field">
+          <label for="username">Minecraft username</label>
+          <input type="text" id="username" name="username" required minlength="3" maxlength="16" pattern="[A-Za-z0-9_]{3,16}" autocomplete="off" spellcheck="false" title="3 to 16 letters, numbers, or underscores">
+          <p class="hint">Your Java Edition name, exactly as it appears in game.</p>
+        </div>
+
+        <div class="field">
+          <label for="punishment">What were you punished with?</label>
+          <select id="punishment" name="punishment" required>
+            <option value="">Choose one</option>
+            <option>Permanent ban</option>
+            <option>Temporary ban</option>
+            <option>Mute</option>
+            <option>Kick or other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="rule">Which rule was it for?</label>
+          <select id="rule" name="rule" required>
+            <option value="">Choose one</option>
+            <option value="Rule 1: Be respectful">1. Be respectful</option>
+            <option value="Rule 2: No griefing or stealing">2. No griefing or stealing</option>
+            <option value="Rule 3: No cheating">3. No cheating</option>
+            <option value="Rule 4: No exploits or duping">4. No exploits or duping</option>
+            <option value="Rule 5: PvP needs consent">5. PvP needs consent</option>
+            <option value="Rule 6: No spam or advertising">6. No spam or advertising</option>
+            <option value="Rule 7: Don't lag the server">7. Don't lag the server</option>
+            <option value="Rule 8: Keep it appropriate">8. Keep it appropriate</option>
+            <option value="Rule 9: No ban evasion">9. No ban evasion</option>
+            <option value="Rule 10: Staff have the final say">10. Staff have the final say</option>
+            <option value="Not sure">I'm not sure</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="when">When did it happen? (optional)</label>
+          <input type="text" id="when" name="when" maxlength="100" placeholder="For example: Saturday evening">
+        </div>
+
+        <div class="field">
+          <label for="what">What happened?</label>
+          <textarea id="what" name="what" required minlength="30" maxlength="900"></textarea>
+          <p class="hint">At least 30 characters. Describe it from your side.</p>
+        </div>
+
+        <div class="field">
+          <label for="why">Why should it be lifted?</label>
+          <textarea id="why" name="why" required minlength="30" maxlength="900"></textarea>
+          <p class="hint">At least 30 characters.</p>
+        </div>
+
+        <div class="field">
+          <label for="contact">How can staff reach you?</label>
+          <input type="text" id="contact" name="contact" required maxlength="100" placeholder="Your Discord username" autocomplete="off">
+        </div>
+
+        <div class="hp" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button class="btn green" type="submit">Send appeal</button>
+        <div id="appeal-result" role="status" aria-live="polite" hidden></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p><strong>A Very Random Server</strong></p>
+      <p>Java Edition only. Address: <strong>avrs.aternos.me</strong></p>
+      <p><a href="https://discord.com" data-discord hidden>Join our Discord</a></p>
+    </div>
+    <p class="fine">AVRS is a fan-run community server. Not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft. Minecraft is a trademark of Mojang Studios.</p>
+  </div>
+</footer>
+</body>
+</html>
