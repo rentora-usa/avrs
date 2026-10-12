@@ -101,15 +101,43 @@
   }
 
   /* ---------- Live server status ---------- */
+  // Two public status APIs are checked. If either says the server is up, it shows as up,
+  // because a single API can return stale or blocked results for Aternos servers.
   const clean = (s) => String(s || "").replace(/§./g, "").trim();
 
-  function classify(data) {
-    if (!data || typeof data.online !== "boolean") return "unknown";
-    if (!data.online) return "offline";
+  const SOURCES = [
+    {
+      url: () => `https://api.mcsrvstat.us/3/${encodeURIComponent(AVRS.ip)}`,
+      normalize: (d) => ({
+        online: d.online === true,
+        players: d.players,
+        version: clean(d.version),
+        motd: ((d.motd && d.motd.clean) || []).join(" "),
+      }),
+    },
+    {
+      url: () => `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(AVRS.ip)}`,
+      normalize: (d) => ({
+        online: d.online === true,
+        players: d.players,
+        version: clean(d.version && (d.version.name_clean || d.version.name_raw)),
+        motd: clean(d.motd && d.motd.clean),
+      }),
+    },
+  ];
+
+  async function fetchSource(src) {
+    const res = await fetch(src.url(), { cache: "no-store" });
+    if (!res.ok) throw new Error(String(res.status));
+    return src.normalize(await res.json());
+  }
+
+  function classify(r) {
+    if (!r.online) return "offline";
     // Aternos answers pings with a placeholder status while a server is asleep or booting.
-    const text = `${clean(data.version)} ${(data.motd && data.motd.clean || []).join(" ")}`.toLowerCase();
-    if (/offline/.test(text)) return "offline";
-    if (/start|load|prepar|queue|waiting|saving|stopping/.test(text)) return "starting";
+    if (/^\W*offline/i.test(r.version) || /server is offline/i.test(r.motd)) return "offline";
+    if (/^\W*(start|load|prepar|queue|waiting|saving|stopping)/i.test(r.version) ||
+        /(starting|loading|preparing|in queue|waiting in)/i.test(r.motd)) return "starting";
     return "online";
   }
 
@@ -118,17 +146,19 @@
     const versionSpots = $$("[data-version]");
     if (!boxes.length && !versionSpots.length) return;
 
-    let data = null;
-    try {
-      const res = await fetch(AVRS.statusApi + encodeURIComponent(AVRS.ip), { cache: "no-store" });
-      if (res.ok) data = await res.json();
-    } catch { /* leave data null */ }
+    const settled = await Promise.allSettled(SOURCES.map(fetchSource));
+    const results = settled.filter((r) => r.status === "fulfilled").map((r) => r.value);
+    const classified = results.map((r) => ({ r, state: classify(r) }));
+    const pick = (st) => classified.find((c) => c.state === st);
+    const best = pick("online") || pick("starting") || pick("offline");
+    const state = best ? best.state : "unknown";
+    const data = best ? best.r : null;
+    console.debug("[AVRS status]", settled, state);
 
-    const state = classify(data);
     const text = { online: "Online", offline: "Offline", starting: "Starting up", unknown: "Status unavailable" }[state];
     const notes = {
       online: "Copy the address above and join.",
-      offline: "Aternos servers shut down when empty and have to be started by someone with access. Ask staff to start it.",
+      offline: "Aternos servers shut down when empty and have to be started by someone with access. If you think it's actually up, try joining anyway; this check can lag behind.",
       starting: "The server is waking up. Try joining again in a minute.",
       unknown: "We couldn't check the server. It may still be reachable, so try joining directly.",
     };
@@ -141,15 +171,15 @@
       set("[data-status-note]", notes[state]);
       if (state === "online" && data.players) {
         set("[data-status-players]", `${data.players.online} / ${data.players.max}`);
-        set("[data-status-version]", clean(data.version) || "Unknown");
+        set("[data-status-version]", data.version || "Unknown");
       } else {
         set("[data-status-players]", "–");
         set("[data-status-version]", "–");
       }
     });
 
-    if (state === "online" && clean(data.version)) {
-      versionSpots.forEach((el) => { el.textContent = `Java Edition ${clean(data.version)}`; });
+    if (state === "online" && data.version) {
+      versionSpots.forEach((el) => { el.textContent = `Java Edition ${data.version}`; });
     }
   }
 
