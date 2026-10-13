@@ -4,7 +4,7 @@
 
   /* ---------- Settings: edit these ---------- */
   const AVRS = {
-    ip: "avrs.aternos.me",
+    ip: "avrs.play.hosting",
     // Paste your Discord invite link (e.g. "https://discord.gg/abc123"). Leave "" to hide Discord links.
     discordUrl: "",
     // Paste a Discord webhook URL to receive appeals in a staff channel. Leave "" and players
@@ -102,7 +102,7 @@
 
   /* ---------- Live server status ---------- */
   // Two public status APIs are checked. If either says the server is up, it shows as up,
-  // because a single API can return stale or blocked results for Aternos servers.
+  // because a single API can return stale or blocked results.
   const clean = (s) => String(s || "").replace(/§./g, "").trim();
 
   const SOURCES = [
@@ -134,7 +134,7 @@
 
   function classify(r) {
     if (!r.online) return "offline";
-    // Aternos answers pings with a placeholder status while a server is asleep or booting.
+    // Some hosts answer pings with a placeholder status while a server is asleep or booting.
     if (/^\W*offline/i.test(r.version) || /server is offline/i.test(r.motd)) return "offline";
     if (/^\W*(start|load|prepar|queue|waiting|saving|stopping)/i.test(r.version) ||
         /(starting|loading|preparing|in queue|waiting in)/i.test(r.motd)) return "starting";
@@ -158,7 +158,7 @@
     const text = { online: "Online", offline: "Offline", starting: "Starting up", unknown: "Status unavailable" }[state];
     const notes = {
       online: "Copy the address above and join.",
-      offline: "Aternos servers shut down when empty and have to be started by someone with access. If you think it's actually up, try joining anyway; this check can lag behind.",
+      offline: "The server looks offline right now. If you think it's actually up, try joining anyway; this check can lag behind. Otherwise let staff know.",
       starting: "The server is waking up. Try joining again in a minute.",
       unknown: "We couldn't check the server. It may still be reachable, so try joining directly.",
     };
